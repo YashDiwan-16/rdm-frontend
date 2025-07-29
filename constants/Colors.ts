@@ -1,26 +1,39 @@
 /**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
+ * RDM Moodverse Color Palette
+ * Calming blues and refreshing greens for mindful goal achievement
  */
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+const primaryBlue = '#01377D';      // Deep Navy Blue
+const accentBlue = '#009DD1';       // Bright Blue
+const lightBlue = '#97E7F5';        // Light Sky Blue
+const successGreen = '#7ED348';     // Bright Green
+const secondaryGreen = '#26B170';   // Forest Green
 
 export const Colors = {
   light: {
-    text: '#11181C',
+    text: primaryBlue,
     background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    tint: accentBlue,
+    icon: primaryBlue,
+    tabIconDefault: primaryBlue,
+    tabIconSelected: accentBlue,
+    primary: primaryBlue,
+    accent: accentBlue,
+    lightBlue: lightBlue,
+    success: successGreen,
+    secondary: secondaryGreen,
   },
   dark: {
     text: '#ECEDEE',
     background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
+    tint: lightBlue,
+    icon: lightBlue,
     tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    tabIconSelected: lightBlue,
+    primary: accentBlue,
+    accent: lightBlue,
+    lightBlue: lightBlue,
+    success: successGreen,
+    secondary: secondaryGreen,
   },
 };
