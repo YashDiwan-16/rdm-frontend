@@ -173,6 +173,30 @@ export default function DashboardScreen() {
           </View>
         </View>
 
+        {/* Quick Actions */}
+        <View style={styles.section}>
+          <ThemedText style={styles.sectionTitle}>Quick Actions</ThemedText>
+          <View style={styles.actionCards}>
+            <TouchableOpacity 
+              style={styles.actionCard}
+              onPress={() => router.push('/send-tokens')}
+            >
+              <ThemedText style={styles.actionEmoji}>💸</ThemedText>
+              <ThemedText style={styles.actionTitle}>Send Tokens</ThemedText>
+              <ThemedText style={styles.actionDescription}>Transfer to self or others</ThemedText>
+            </TouchableOpacity>
+            
+            <TouchableOpacity 
+              style={styles.actionCard}
+              onPress={() => router.push('/charity')}
+            >
+              <ThemedText style={styles.actionEmoji}>❤️</ThemedText>
+              <ThemedText style={styles.actionTitle}>Charity</ThemedText>
+              <ThemedText style={styles.actionDescription}>Donate to good causes</ThemedText>
+            </TouchableOpacity>
+          </View>
+        </View>
+
         {/* Suggested Goals Dropdown */}
         <View style={styles.section}>
           <ThemedText style={styles.sectionTitle}>Mindful Goals</ThemedText>
@@ -404,6 +428,46 @@ const styles = StyleSheet.create({
     color: Colors.light.icon,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
+  },
+
+  // Quick Actions
+  actionCards: {
+    flexDirection: 'row',
+    gap: 16,
+  },
+  actionCard: {
+    flex: 1,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 20,
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: Colors.light.lightBlue,
+    shadowColor: Colors.light.accent,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 6,
+  },
+  actionEmoji: {
+    fontSize: 32,
+    marginBottom: 12,
+  },
+  actionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: Colors.light.primary,
+    marginBottom: 4,
+    textAlign: 'center',
+  },
+  actionDescription: {
+    fontSize: 12,
+    color: Colors.light.icon,
+    textAlign: 'center',
+    lineHeight: 16,
   },
 
   // Suggested Goals
