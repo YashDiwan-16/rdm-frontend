@@ -1,4 +1,5 @@
 import { Colors } from '@/constants/Colors';
+import { useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import Animated, {
@@ -25,6 +26,7 @@ export function SplashScreen() {
   const fadeAnim = useSharedValue(0);
   const scaleAnim = useSharedValue(0.8);
   const floatAnim = useSharedValue(0);
+  const router = useRouter();
   
   const randomQuote = inspirationalQuotes[Math.floor(Math.random() * inspirationalQuotes.length)];
 
@@ -50,7 +52,14 @@ export function SplashScreen() {
       -1,
       true
     );
-  }, [fadeAnim, scaleAnim, floatAnim]);
+
+    // Navigate to login after 3 seconds
+    const timer = setTimeout(() => {
+      router.replace('/login');
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [fadeAnim, scaleAnim, floatAnim, router]);
 
   const fadeStyle = useAnimatedStyle(() => ({
     opacity: fadeAnim.value,
@@ -75,7 +84,7 @@ export function SplashScreen() {
         {/* Main content */}
         <Animated.View style={[styles.content, fadeStyle]}>
           <Animated.View style={[styles.titleContainer, scaleStyle]}>
-            
+           
             <ThemedText style={styles.subtitle}>RDM Moodverse</ThemedText>
           </Animated.View>
           
