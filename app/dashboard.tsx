@@ -1,8 +1,10 @@
 import { ThemedText } from '@/components/ThemedText';
 import { Colors } from '@/constants/Colors';
+import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {
     Alert,
+    Modal,
     ScrollView,
     StyleSheet,
     TextInput,
@@ -29,6 +31,8 @@ export default function DashboardScreen() {
   const [showRoadmap, setShowRoadmap] = useState<string | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedGoal, setSelectedGoal] = useState('');
+  const [showTokenModal, setShowTokenModal] = useState(false);
+  const [completedGoalTokens, setCompletedGoalTokens] = useState(0);
   
   const [wallets] = useState<TokenWallet[]>([
     { name: 'Base Purse', balance: 150, color: Colors.light.accent },
@@ -131,8 +135,18 @@ export default function DashboardScreen() {
     ));
 
     const tokensEarned = Math.floor(Math.random() * 20) + 10;
-    
-    Alert.alert('Goal Completed!', `You earned ${tokensEarned} tokens!`);
+    setCompletedGoalTokens(tokensEarned);
+    setShowTokenModal(true);
+  };
+
+  const closeTokenModal = () => {
+    setShowTokenModal(false);
+  };
+
+  const navigateToTokenSend = () => {
+    setShowTokenModal(false);
+    // Navigate to the send tokens screen
+    router.push('/send-tokens');
   };
 
   return (
@@ -269,6 +283,43 @@ export default function DashboardScreen() {
 
         <View style={styles.bottomPadding} />
       </ScrollView>
+
+      {/* Congratulations Modal */}
+      <Modal
+        visible={showTokenModal}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={closeTokenModal}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.simpleModalContainer}>
+            {/* Congratulations Header */}
+            <View style={styles.congratsHeader}>
+              <ThemedText style={styles.congratsEmoji}>🎉</ThemedText>
+              <ThemedText style={styles.congratsTitle}>Congratulations!</ThemedText>
+              <ThemedText style={styles.congratsSubtitle}>
+                You&apos;ve earned {completedGoalTokens} tokens for completing your goal!
+              </ThemedText>
+            </View>
+
+            {/* Send Tokens Button */}
+            <TouchableOpacity 
+              style={styles.sendTokensButton}
+              onPress={navigateToTokenSend}
+            >
+              <ThemedText style={styles.sendTokensButtonText}>Send Tokens</ThemedText>
+            </TouchableOpacity>
+
+            {/* Close Button */}
+            <TouchableOpacity 
+              style={styles.modalCloseButton}
+              onPress={closeTokenModal}
+            >
+              <ThemedText style={styles.modalCloseText}>✕</ThemedText>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -600,5 +651,94 @@ const styles = StyleSheet.create({
   // Bottom padding
   bottomPadding: {
     height: 40,
+  },
+
+  // Modal Styles
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  simpleModalContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 32,
+    width: '100%',
+    maxWidth: 350,
+    position: 'relative',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 20,
+    elevation: 15,
+    alignItems: 'center',
+  },
+  modalCloseButton: {
+    position: 'absolute',
+    top: 16,
+    right: 16,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#f0f0f0',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalCloseText: {
+    fontSize: 16,
+    color: '#666',
+    fontWeight: 'bold',
+  },
+
+  // Congratulations Header
+  congratsHeader: {
+    alignItems: 'center',
+    marginBottom: 32,
+    paddingTop: 16,
+  },
+  congratsEmoji: {
+    fontSize: 64,
+    marginBottom: 16,
+  },
+  congratsTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: Colors.light.primary,
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  congratsSubtitle: {
+    fontSize: 16,
+    color: Colors.light.icon,
+    textAlign: 'center',
+    lineHeight: 24,
+  },
+
+  // Send Tokens Button
+  sendTokensButton: {
+    width: '100%',
+    height: 56,
+    backgroundColor: Colors.light.accent,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: Colors.light.accent,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 6,
+  },
+  sendTokensButtonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#fff',
   },
 });
